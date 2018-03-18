@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid ;
+        } 
+    </style>
+</head>
+<body>
+    <% include ./components/top.inc.ejs %>
+    <form action="?" method="post" enctype="multipart/form-data">
+        标题：<input type="text" name="title" required><br>
+        描述：<textarea name="description" required></textarea><br>
+        头像：<input type="file" name="src" required><br>
+        <input type="submit" value="添加">
+    </form>
+    <table>
+        <tr>
+            <td>标题</td>
+            <td>描述</td>
+            <td>头像</td>
+            <td>操作</td>
+        </tr>
+        <% for(let i=0; i<custom.length; i++){ %>
+            <tr>
+                <td><%= custom[i].title %></td>
+                <td><%= custom[i].description %></td>
+                <td>
+                    <img src="<%= custom[i].src %>" style="width: 30px">
+                </td>
+                <td>
+                    <a href="?act=mod&id=<%= custom[i].ID %>">修改</a>
+                    <a href="?act=del&id=<%= custom[i].ID %>" onclick="return confirm('确定删除？')">删除</a>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+    <form action="?" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value=<%= mod.ID %> ></input>
+        标题：<input type="text" name="title" required value=<%= mod.title %> ><br>
+        描述：<textarea name="description" required><%= mod.description %></textarea><br>
+        头像：<input type="file" name="src" ><br>
+        <input type="submit" value="修改">
+    </form>
+</body>
+</html>
